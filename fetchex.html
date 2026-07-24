@@ -3,237 +3,362 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Git & GitHub Command Cheat Sheet</title>
+    <title>Git & GitHub Pro Cheat Sheet</title>
     <style>
         :root {
-            --primary: #2da44e;
-            --bg-color: #f6f8fa;
-            --card-bg: #ffffff;
-            --text-main: #24292f;
-            --text-muted: #57606a;
-            --border: #d0d7de;
-            --code-bg: #eff3f6;
+            --bg-base: #0d1117;
+            --bg-card: #161b22;
+            --bg-command: #21262d;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent-glow: rgba(88, 166, 255, 0.4);
+            --accent-blue: #58a6ff;
+            --accent-green: #2ea043;
+            --border-color: #30363d;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            --font-code: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
+            font-family: var(--font-main);
+            background-color: var(--bg-base);
+            background-image: radial-gradient(circle at 50% 0%, #1f2937 0%, transparent 70%);
             color: var(--text-main);
-            line-height: 1.5;
+            line-height: 1.6;
             margin: 0;
-            padding: 20px;
+            padding: 40px 20px;
+            min-height: 100vh;
         }
 
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease-out;
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             margin-bottom: 10px;
+            /* Gradient text effect */
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
         }
 
         p.subtitle {
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            font-weight: 300;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 25px;
         }
 
         .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        /* Staggered card animations */
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 10px 30px var(--accent-glow);
         }
 
         .card h2 {
             margin-top: 0;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--bg-color);
-            font-size: 1.25rem;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 1.4rem;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .command-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .command-group:last-child {
+            margin-bottom: 0;
         }
 
         .command {
-            background-color: var(--code-bg);
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-            font-size: 0.9em;
-            color: var(--text-main);
-            display: inline-block;
-            margin-bottom: 5px;
-            font-weight: 600;
+            background-color: var(--bg-command);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-family: var(--font-code);
+            font-size: 0.95em;
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            border-left: 4px solid var(--accent-green);
+            cursor: pointer;
+            transition: background 0.2s;
+            position: relative;
+        }
+
+        .command::before {
+            content: "$ ";
+            color: var(--text-muted);
+            margin-right: 8px;
+        }
+
+        .command:hover {
+            background-color: #30363d;
+        }
+
+        .command:hover::after {
+            content: "Click to copy";
+            position: absolute;
+            right: 15px;
+            font-size: 0.75em;
+            color: var(--text-muted);
+            font-family: var(--font-main);
+        }
+
+        .command.copied::after {
+            content: "Copied!" !important;
+            color: var(--accent-green) !important;
         }
 
         .description {
-            font-size: 0.9em;
+            font-size: 0.95em;
             color: var(--text-muted);
-            margin: 0 0 10px 0;
+            margin: 0 0 0 5px;
         }
 
         footer {
             text-align: center;
-            margin-top: 40px;
+            margin-top: 60px;
             color: var(--text-muted);
             font-size: 0.9em;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Toast Notification */
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--accent-green);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(46, 160, 67, 0.4);
+        }
+
+        #toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Git & GitHub Cheat Sheet</h1>
-        <p class="subtitle">Your ultimate reference for version control</p>
+        <h1>Git & GitHub Pro</h1>
+        <p class="subtitle">Click any command to copy it to your terminal</p>
     </header>
 
     <div class="container">
         <!-- Section 1: Setup & Init -->
         <div class="card">
-            <h2>1. Setup & Starting</h2>
+            <h2>🚀 Setup & Starting</h2>
             <div class="command-group">
-                <div class="command">git config --global user.name "Name"</div>
+                <div class="command" onclick="copyCommand(this)">git config --global user.name "Name"</div>
                 <p class="description">Sets the author name attached to your commits.</p>
             </div>
             <div class="command-group">
-                <div class="command">git config --global user.email "Email"</div>
+                <div class="command" onclick="copyCommand(this)">git config --global user.email "Email"</div>
                 <p class="description">Sets the author email attached to your commits.</p>
             </div>
             <div class="command-group">
-                <div class="command">git init</div>
+                <div class="command" onclick="copyCommand(this)">git init</div>
                 <p class="description">Initializes a new, empty Git repository locally.</p>
             </div>
             <div class="command-group">
-                <div class="command">git clone &lt;url&gt;</div>
-                <p class="description">Downloads an existing repository from GitHub to your computer.</p>
+                <div class="command" onclick="copyCommand(this)">git clone &lt;url&gt;</div>
+                <p class="description">Downloads an existing project to your computer.</p>
             </div>
         </div>
 
         <!-- Section 2: Daily Workflow -->
         <div class="card">
-            <h2>2. The Daily Workflow</h2>
+            <h2>⚡ The Daily Workflow</h2>
             <div class="command-group">
-                <div class="command">git status</div>
-                <p class="description">Shows modified files and what is ready to be committed.</p>
+                <div class="command" onclick="copyCommand(this)">git status</div>
+                <p class="description">Shows modified files and what is ready to commit.</p>
             </div>
             <div class="command-group">
-                <div class="command">git add .</div>
+                <div class="command" onclick="copyCommand(this)">git add .</div>
                 <p class="description">Stages all modified and new files for the next commit.</p>
             </div>
             <div class="command-group">
-                <div class="command">git commit -m "Message"</div>
-                <p class="description">Saves your staged changes locally with a descriptive message.</p>
+                <div class="command" onclick="copyCommand(this)">git commit -m "Message"</div>
+                <p class="description">Saves your staged changes locally with a message.</p>
             </div>
             <div class="command-group">
-                <div class="command">git push origin main</div>
-                <p class="description">Uploads your local commits to the remote repository (GitHub).</p>
+                <div class="command" onclick="copyCommand(this)">git push origin main</div>
+                <p class="description">Uploads your local commits to the remote repository.</p>
             </div>
             <div class="command-group">
-                <div class="command">git pull origin main</div>
-                <p class="description">Downloads new commits from GitHub and merges them locally.</p>
+                <div class="command" onclick="copyCommand(this)">git pull origin main</div>
+                <p class="description">Downloads new commits and merges them locally.</p>
             </div>
         </div>
 
         <!-- Section 3: Branching -->
         <div class="card">
-            <h2>3. Branching & Merging</h2>
+            <h2>🌿 Branching & Merging</h2>
             <div class="command-group">
-                <div class="command">git branch</div>
-                <p class="description">Lists all local branches. The current branch has an asterisk (*).</p>
+                <div class="command" onclick="copyCommand(this)">git branch</div>
+                <p class="description">Lists all local branches. Active branch has a (*).</p>
             </div>
             <div class="command-group">
-                <div class="command">git checkout -b &lt;branch-name&gt;</div>
-                <p class="description">Creates a new branch and immediately switches to it.</p>
+                <div class="command" onclick="copyCommand(this)">git checkout -b &lt;branch&gt;</div>
+                <p class="description">Creates a new branch and instantly switches to it.</p>
             </div>
             <div class="command-group">
-                <div class="command">git checkout &lt;branch-name&gt;</div>
+                <div class="command" onclick="copyCommand(this)">git checkout &lt;branch&gt;</div>
                 <p class="description">Switches to an existing branch.</p>
             </div>
             <div class="command-group">
-                <div class="command">git merge &lt;branch-name&gt;</div>
-                <p class="description">Combines code from the specified branch into your current working branch.</p>
+                <div class="command" onclick="copyCommand(this)">git merge &lt;branch&gt;</div>
+                <p class="description">Combines code from the specified branch into yours.</p>
             </div>
         </div>
 
         <!-- Section 4: History & Undoing -->
         <div class="card">
-            <h2>4. History & Undoing</h2>
+            <h2>⏪ History & Undoing</h2>
             <div class="command-group">
-                <div class="command">git log --oneline</div>
-                <p class="description">Shows a compact history of all previous commits.</p>
+                <div class="command" onclick="copyCommand(this)">git log --oneline</div>
+                <p class="description">Shows a compact, readable history of past commits.</p>
             </div>
             <div class="command-group">
-                <div class="command">git restore &lt;file&gt;</div>
+                <div class="command" onclick="copyCommand(this)">git restore &lt;file&gt;</div>
                 <p class="description">Discards uncommitted changes in a specific file.</p>
             </div>
             <div class="command-group">
-                <div class="command">git revert &lt;commit-hash&gt;</div>
-                <p class="description">Creates a new commit that undoes the changes of a past commit safely.</p>
+                <div class="command" onclick="copyCommand(this)">git revert &lt;hash&gt;</div>
+                <p class="description">Creates a new commit that safely undoes a past commit.</p>
             </div>
             <div class="command-group">
-                <div class="command">git reset --hard HEAD~1</div>
-                <p class="description">DANGER: Permanently deletes your most recent unpushed commit.</p>
+                <div class="command" onclick="copyCommand(this)">git reset --hard HEAD~1</div>
+                <p class="description">DANGER: Permanently deletes your most recent commit.</p>
             </div>
         </div>
 
         <!-- Section 5: Advanced Git -->
         <div class="card">
-            <h2>5. Advanced Git</h2>
+            <h2>🔥 Advanced Git</h2>
             <div class="command-group">
-                <div class="command">git stash</div>
-                <p class="description">Temporarily shelves uncommitted changes so you can switch branches.</p>
+                <div class="command" onclick="copyCommand(this)">git stash</div>
+                <p class="description">Temporarily shelves uncommitted changes.</p>
             </div>
             <div class="command-group">
-                <div class="command">git stash pop</div>
+                <div class="command" onclick="copyCommand(this)">git stash pop</div>
                 <p class="description">Brings back the changes you previously stashed.</p>
             </div>
             <div class="command-group">
-                <div class="command">git rebase main</div>
-                <p class="description">Rewrites your branch's history to start from the tip of the main branch.</p>
+                <div class="command" onclick="copyCommand(this)">git rebase main</div>
+                <p class="description">Rewrites your branch history to start from main's tip.</p>
             </div>
             <div class="command-group">
-                <div class="command">git bisect</div>
-                <p class="description">Uses binary search to find the exact commit that introduced a bug.</p>
+                <div class="command" onclick="copyCommand(this)">git bisect</div>
+                <p class="description">Uses binary search to find exactly which commit broke code.</p>
             </div>
         </div>
 
         <!-- Section 6: GitHub CLI -->
         <div class="card">
-            <h2>6. GitHub CLI (gh)</h2>
+            <h2>🐙 GitHub CLI (gh)</h2>
             <div class="command-group">
-                <div class="command">gh auth login</div>
-                <p class="description">Logs you into GitHub from your terminal.</p>
+                <div class="command" onclick="copyCommand(this)">gh auth login</div>
+                <p class="description">Authenticates your GitHub account from the terminal.</p>
             </div>
             <div class="command-group">
-                <div class="command">gh repo create</div>
-                <p class="description">Creates a brand new GitHub repository from your terminal.</p>
+                <div class="command" onclick="copyCommand(this)">gh repo create</div>
+                <p class="description">Creates a brand new GitHub repository remotely.</p>
             </div>
             <div class="command-group">
-                <div class="command">gh pr create</div>
-                <p class="description">Opens a new Pull Request on GitHub for your current branch.</p>
+                <div class="command" onclick="copyCommand(this)">gh pr create</div>
+                <p class="description">Opens a new Pull Request for your current branch.</p>
             </div>
             <div class="command-group">
-                <div class="command">gh issue list</div>
+                <div class="command" onclick="copyCommand(this)">gh issue list</div>
                 <p class="description">Lists all open issues in the current repository.</p>
             </div>
         </div>
     </div>
 
     <footer>
-        <p>Save this file and open it in any web browser for a quick reference guide.</p>
+        <p>Built for developers. Interactive Cheat Sheet.</p>
     </footer>
 
+    <div id="toast">Command copied!</div>
+
+    <script>
+        function copyCommand(element) {
+            // Get the text, ignoring the ::before element content (CSS handles that)
+            const textToCopy = element.innerText;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                // Visual feedback on the command block
+                element.classList.add('copied');
+                setTimeout(() => element.classList.remove('copied'), 2000);
+
+                // Show toast notification
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2500);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
 </body>
 </html>
