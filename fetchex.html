@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git & GitHub Command Cheat Sheet</title>
+    <style>
+        :root {
+            --primary: #2da44e;
+            --bg-color: #f6f8fa;
+            --card-bg: #ffffff;
+            --text-main: #24292f;
+            --text-muted: #57606a;
+            --border: #d0d7de;
+            --code-bg: #eff3f6;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--bg-color);
+            font-size: 1.25rem;
+        }
+
+        .command-group {
+            margin-bottom: 15px;
+        }
+
+        .command {
+            background-color: var(--code-bg);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+            font-size: 0.9em;
+            color: var(--text-main);
+            display: inline-block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .description {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin: 0 0 10px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--text-muted);
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Git & GitHub Cheat Sheet</h1>
+        <p class="subtitle">Your ultimate reference for version control</p>
+    </header>
+
+    <div class="container">
+        <!-- Section 1: Setup & Init -->
+        <div class="card">
+            <h2>1. Setup & Starting</h2>
+            <div class="command-group">
+                <div class="command">git config --global user.name "Name"</div>
+                <p class="description">Sets the author name attached to your commits.</p>
+            </div>
+            <div class="command-group">
+                <div class="command">git config --global user.email "Email"</div>
+                <p class="description">Sets the author email attached to your commits.</p>
+            </div>
+            <div class="command-group">
+                <div class="command">git init</div>
+                <p class="description">Initializes a new, empty Git repository locally.</p>
+            </div>
+            <div class="command-group">
+                <div class="command">git clone &lt;url&gt;</div>
+                <p class="description">Downloads an existing repository from GitHub to your computer.</p>
+            </div>
+        </div>
+
+        <!-- Section 2: Daily Workflow -->
+        <div class="card">
+            <h2>2. The Daily Workflow</h2>
+            <div class="command-group">
+                <div class="command">git status</div>
+                <p class="description">Shows modified files and what is ready to be committed.</p>
+            </div>
+            <div class="command-group">
+                <div class="command">git add .</div>
+                <p class="description">Stages all modified and new files for the next commit.</p>
+            </div>
+            <div class="command-group">
+                <div class="command">git commit -m "Message"</div>
+                <p class="description">Saves your staged changes locally with a descriptive message.</p>
+            </div>
+            <div class="command-group">
+                <div class="command">git push origin main</div>
+                <p class="description">Uploads your local commits to the remote repository (GitHub).</p>
+            </div>
+            <div class="command-group">
+                <div class="command">git pull origin main</div>
+                <p class="description">Downloads new commits from GitHub and merges them locally.</p>
+            </div>
+        </div>
+
+        <!-- Section 3: Branching -->
+        <div class="card">
+            <h2>3. Branching & Merging</h2>
+            <div class="command-group">
+                <div class="command">git branch</div>
+                <p class="description">Lists all local branches. The current branch has an asterisk (*).</p>
+            </div>
+            <div class="command-group">
+                <div class="command">git checkout -b &lt;branch-name&gt;</div>
+                <p class="description">Creates a new branch and immediately switches to it.</p>
+            </div>
+            <div class="command-group">
+                <div class="command">git checkout &lt;branch-name&gt;</div>
+                <p class="description">Switches to an existing branch.</p>
+            </div>
+            <div class="command-group">
+                <div class="command">git merge &lt;branch-name&gt;</div>
+                <p class="description">Combines code from the specified branch into your current working branch.</p>
+            </div>
+        </div>
+
+        <!-- Section 4: History & Undoing -->
+        <div class="card">
+            <h2>4. History & Undoing</h2>
+            <div class="command-group">
+                <div class="command">git log --oneline</div>
+                <p class="description">Shows a compact history of all previous commits.</p>
+            </div>
+            <div class="command-group">
+                <div class="command">git restore &lt;file&gt;</div>
+                <p class="description">Discards uncommitted changes in a specific file.</p>
+            </div>
+            <div class="command-group">
+                <div class="command">git revert &lt;commit-hash&gt;</div>
+                <p class="description">Creates a new commit that undoes the changes of a past commit safely.</p>
+            </div>
+            <div class="command-group">
+                <div class="command">git reset --hard HEAD~1</div>
+                <p class="description">DANGER: Permanently deletes your most recent unpushed commit.</p>
+            </div>
+        </div>
+
+        <!-- Section 5: Advanced Git -->
+        <div class="card">
+            <h2>5. Advanced Git</h2>
+            <div class="command-group">
+                <div class="command">git stash</div>
+                <p class="description">Temporarily shelves uncommitted changes so you can switch branches.</p>
+            </div>
+            <div class="command-group">
+                <div class="command">git stash pop</div>
+                <p class="description">Brings back the changes you previously stashed.</p>
+            </div>
+            <div class="command-group">
+                <div class="command">git rebase main</div>
+                <p class="description">Rewrites your branch's history to start from the tip of the main branch.</p>
+            </div>
+            <div class="command-group">
+                <div class="command">git bisect</div>
+                <p class="description">Uses binary search to find the exact commit that introduced a bug.</p>
+            </div>
+        </div>
+
+        <!-- Section 6: GitHub CLI -->
+        <div class="card">
+            <h2>6. GitHub CLI (gh)</h2>
+            <div class="command-group">
+                <div class="command">gh auth login</div>
+                <p class="description">Logs you into GitHub from your terminal.</p>
+            </div>
+            <div class="command-group">
+                <div class="command">gh repo create</div>
+                <p class="description">Creates a brand new GitHub repository from your terminal.</p>
+            </div>
+            <div class="command-group">
+                <div class="command">gh pr create</div>
+                <p class="description">Opens a new Pull Request on GitHub for your current branch.</p>
+            </div>
+            <div class="command-group">
+                <div class="command">gh issue list</div>
+                <p class="description">Lists all open issues in the current repository.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Save this file and open it in any web browser for a quick reference guide.</p>
+    </footer>
+
+</body>
+</html>
